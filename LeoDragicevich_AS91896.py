@@ -1,0 +1,1 @@
+print("Choose your companion to start your journey")
