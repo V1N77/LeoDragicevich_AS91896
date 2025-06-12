@@ -1,2 +1,32 @@
-Intro: "
+Intro: "Choose you companion to start your journey"
+1. Fire Lizard
+2. Water Turtle
+3. Plant Frog
 
+#stats
+
+Fire Lizard stats:
+type = Fire
+health = 40
+speed = 30
+damage multiplier = 1.1x
+defense = 
+moves = Tackle, Ember
+
+Water Turtle stats:
+type = Water
+health = 45
+speed = 25
+damage multiplier = 1.0x
+defense = 
+moves = Tackle, Water_Gun
+
+Plant Frog stats:
+type = Plant
+health = 50
+speed = 20
+damage multiplier = 0.9x
+defense = 
+moves = Tackle, Vine_Whip
+
+defense 100 = enymey damagemultiplier = 0.5x
