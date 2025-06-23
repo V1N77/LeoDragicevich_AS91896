@@ -49,17 +49,29 @@ print("\nChoose you Companion to start your journey, but you can only choose one
 
 user_choice = input("1. Fire Lizard\n2. Water Turtle\n3. Plant Frog\n").lower()
 inventory = []
-if inventory not in ["1", "2", "3", "fire lizard", "water turtle", "plant frog", "firelizard", "waterturtle", "plantfrog", "electric mouse", "4", "electricmouse"]:
-    print("Please choose a valid option")
-    if inventory == ["1", "fire lizard", "firelizard"]:
-        inventory.append(fire_lizard)
-        print("Great choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health")
-    elif inventory == ["2", "water turtle", "waterturtle"]:
-        water_turtle += inventory
-        print("Great choice! Water Turtle is a great all-round option to out match your foes and become the victor!")
-    elif inventory == ["3", "plant frog", "plantfrog"]:
-        plant_frog += inventory
-        print("Great choice! Plant Frog has great defense and health, but is a bit slow so get ready to tank some blows!")
-    elif inventory == ["4", "electric mouse", "electric "]:
-        electric_mouse += inventory
-        print("Oh... uhh... I guess we could get that one for you...")
+
+valid_choices = {
+    "1": fire_lizard,
+    "2": water_turtle,
+    "3": plant_frog,
+    "fire lizard": fire_lizard,
+    "water turtle": water_turtle,
+    "plant frog": plant_frog,
+    "firelizard": fire_lizard,
+    "waterturtle": water_turtle,
+    "plantfrog": plant_frog,
+    "electric mouse": electric_mouse,
+    "4": electric_mouse,
+    "electricmouse": electric_mouse,
+}
+if user_choice in valid_choices:
+    chosen_companion = valid_choices[user_choice]
+    inventory.append(chosen_companion)
+if chosen_companion == fire_lizard:
+        print("Great choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health.")
+elif chosen_companion == water_turtle:
+        print("Great choice! Water Turtle is a great all-round option to outmatch your foes and become the victor!")
+elif chosen_companion == plant_frog:
+        print("Great choice! Plant Frog has great defense and health, but is a bit slow, so get ready to tank some blows!")
+else:
+    print("Please choose a valid option.")
