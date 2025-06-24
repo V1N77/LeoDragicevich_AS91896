@@ -19,38 +19,24 @@ class Moves:
         self.element = element
         self.damage = damage
 
-
 # These lines are to write the stats of the moves variable and orginise it into the Moves class
 tackle = Moves("Tackle", "Normal", damage= 20)
-
 ember = Moves("Ember", "Fire", damage= 30)
-
 water_gun = Moves("Water Gun", "Water", damage= 30)
-
 vine_whip = Moves("Vine Whip", "Plant", damage= 30)
-
 quick_attack = Moves("Quick Attack", "Normal", damage= 24)
-
 thunder_shock = Moves("Thunder shock", "Electric", damage= 34)
-
 
 # These lines arre to write the stats of the moves variable and orginis it into the Chompanion class
 fire_lizard = Companion("Fire Lizard", "Fire", health=100, speed=30, damage_multiplier=1.2, defense= 40, moves= [tackle, ember])
-
 water_turtle = Companion("Water Turtle", "Water", health=110, speed=25, damage_multiplier=1.1, defense= 45, moves= [tackle, water_gun])
-
 plant_frog = Companion("Plant Frog", "Plant", health=120, speed=20, damage_multiplier=0.9, defense= 50, moves= [tackle, vine_whip])
-
 electric_mouse = Companion("Electric Mouse", "Electric", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
 
-
-# This is the opening question to the game as it gives them the choice of what Companion they want for the rest of their journey
-print("\nChoose you Companion to start your journey, but you can only choose one so think wisely, what will your your choice be?")
-
-user_choice = input("1. Fire Lizard\n2. Water Turtle\n3. Plant Frog\n").lower()
 inventory = []
 
-valid_choices = {
+# These are the valid choices you can choose 
+valid_companion_choices = {
     "1": fire_lizard,
     "2": water_turtle,
     "3": plant_frog,
@@ -64,14 +50,37 @@ valid_choices = {
     "4": electric_mouse,
     "electricmouse": electric_mouse,
 }
-if user_choice in valid_choices:
-    chosen_companion = valid_choices[user_choice]
+
+chosen_companion = None
+
+# This defines the loop so that it loops until you choose a valid option
+while chosen_companion is None:
+    # This is the opening question to the game as it gives them the choice of what Companion they want for the rest of their journey
+    print("\n\nChoose you Companion to start your journey, but you can only choose one so think wisely, what will your your choice be?\n")
+    user_choice = input("1. Fire Lizard\n2. Water Turtle\n3. Plant Frog\n").lower()
+
+    # This defines the user choice in the valid choices and sorts the chosen Companions into the inventory variable
+    if user_choice in valid_companion_choices:
+        chosen_companion = valid_companion_choices[user_choice]
     inventory.append(chosen_companion)
-if chosen_companion == fire_lizard:
-        print("Great choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health.")
-elif chosen_companion == water_turtle:
-        print("Great choice! Water Turtle is a great all-round option to outmatch your foes and become the victor!")
-elif chosen_companion == plant_frog:
-        print("Great choice! Plant Frog has great defense and health, but is a bit slow, so get ready to tank some blows!")
-else:
-    print("Please choose a valid option.")
+
+    # These lines define what Companion you chose and gives a print statment depending on which one
+    if chosen_companion == fire_lizard:
+        print("\nGreat choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health.")
+    elif chosen_companion == water_turtle:
+        print("\nGreat choice! Water Turtle is a great all-round option to outmatch your foes and become the victor!")
+    elif chosen_companion == plant_frog:
+        print("\nGreat choice! Plant Frog has great defense and health, but is a bit slow, so get ready to tank some blows!")
+    elif chosen_companion == electric_mouse:
+        print("\noh... uhh... I guess I could get you that one...")
+
+    # If the typed word is not in the previously above valid choices it will loop the opening question and give the heads up to provide a valid option
+    else:
+        print("\n---------------------------------\nPlease choose a valid option.")
+
+# Once you have chosen a Companion you will begivn this prompt and taken to the main lobby menu
+print("\n ---------------------------------\n\n Now that you have chosen your Companion what would you like to do next?\n")
+
+lobby_choice = input("\033[1mPlay!\nInventory\nArea Info\n\033[0m")
+    if lobby_choice == play:
+        play_choice = input
