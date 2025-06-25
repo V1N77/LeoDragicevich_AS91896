@@ -33,7 +33,7 @@ water_turtle = Companion("Water Turtle", "Water", health=110, speed=25, damage_m
 plant_frog = Companion("Plant Frog", "Plant", health=120, speed=20, damage_multiplier=0.9, defense= 50, moves= [tackle, vine_whip])
 electric_mouse = Companion("Electric Mouse", "Electric", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
 
-inventory = []
+companion_inventory = []
 
 # These are the valid choices you can choose 
 valid_companion_choices = {
@@ -51,6 +51,14 @@ valid_companion_choices = {
     "electricmouse": electric_mouse,
 }
 
+
+valid_lobby_choices = {
+    "1": play,
+    "2": inventory,
+    "3": area_info
+
+}
+
 chosen_companion = None
 
 # This defines the loop so that it loops until you choose a valid option
@@ -62,7 +70,7 @@ while chosen_companion is None:
     # This defines the user choice in the valid choices and sorts the chosen Companions into the inventory variable
     if user_choice in valid_companion_choices:
         chosen_companion = valid_companion_choices[user_choice]
-    inventory.append(chosen_companion)
+    companion_inventory.append(chosen_companion)
 
     # These lines define what Companion you chose and gives a print statment depending on which one
     if chosen_companion == fire_lizard:
@@ -79,8 +87,12 @@ while chosen_companion is None:
         print("\n---------------------------------\nPlease choose a valid option.")
 
 # Once you have chosen a Companion you will begivn this prompt and taken to the main lobby menu
-print("\n ---------------------------------\n\n Now that you have chosen your Companion what would you like to do next?\n")
+print("\n ---------------------------------\n\nNow that you have chosen your Companion what would you like to do next?\n")
 
-lobby_choice = input("\033[1mPlay!\nInventory\nArea Info\n\033[0m")
-    if lobby_choice == play:
-        play_choice = input
+lobby_choice = input("\033[1mPlay!\nInventory\nArea Info\n\033[0m").lower()
+if lobby_choice : 'play_choice'
+play_choice = input("\n Meadow  Forest  Cave   Meadow 2   Forest 2   Cave 2")
+elif lobby_choice : 'inventory_choice'
+inventory_choice = input()
+elif lobby_choice : 'area_info_choice'
+area_info_choice = input()
