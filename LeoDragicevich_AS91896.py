@@ -28,10 +28,10 @@ quick_attack = Moves("Quick Attack", "Normal", damage= 24)
 thunder_shock = Moves("Thunder shock", "Electric", damage= 34)
 
 # These lines arre to write the stats of the moves variable and orginis it into the Chompanion class
-fire_lizard = Companion("Fire Lizard", "Fire", health=100, speed=30, damage_multiplier=1.2, defense= 40, moves= [tackle, ember])
-water_turtle = Companion("Water Turtle", "Water", health=110, speed=25, damage_multiplier=1.1, defense= 45, moves= [tackle, water_gun])
-plant_frog = Companion("Plant Frog", "Plant", health=120, speed=20, damage_multiplier=0.9, defense= 50, moves= [tackle, vine_whip])
-electric_mouse = Companion("Electric Mouse", "Electric", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
+fire_lizard = Companion("\033[31;1mFire Lizard\033[0m", "\033[31;1mFire\033[0m", health=100, speed=30, damage_multiplier=1.2, defense= 40, moves= [tackle, ember])
+water_turtle = Companion("\033[34;1mWater Turtle\033[0m", "\033[34;1mWater\033[0m", health=110, speed=25, damage_multiplier=1.1, defense= 45, moves= [tackle, water_gun])
+plant_frog = Companion("\033[32;1mPlant Frog\033[0m", "\033[32;1Plant\033[0m", health=120, speed=20, damage_multiplier=0.9, defense= 50, moves= [tackle, vine_whip])
+electric_mouse = Companion("Electric Mouse\033[0m", "Electric\033[0m", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
 
 companion_inventory = []
 
@@ -51,48 +51,68 @@ valid_companion_choices = {
     "electricmouse": electric_mouse,
 }
 
-
-valid_lobby_choices = {
-    "1": play,
-    "2": inventory,
-    "3": area_info
-
-}
-
 chosen_companion = None
 
 # This defines the loop so that it loops until you choose a valid option
 while chosen_companion is None:
     # This is the opening question to the game as it gives them the choice of what Companion they want for the rest of their journey
     print("\n\nChoose you Companion to start your journey, but you can only choose one so think wisely, what will your your choice be?\n")
-    user_choice = input("1. Fire Lizard\n2. Water Turtle\n3. Plant Frog\n").lower()
+    user_choice = input("1. \033[1m\033[31mFire Lizard\033[0m\n2. \033[1m\033[1;34mWater Turtle\033[0m\n3. \033[1m\033[32mPlant Frog\033[0m\n").lower()
 
     # This defines the user choice in the valid choices and sorts the chosen Companions into the inventory variable
     if user_choice in valid_companion_choices:
         chosen_companion = valid_companion_choices[user_choice]
-    companion_inventory.append(chosen_companion)
-
-    # These lines define what Companion you chose and gives a print statment depending on which one
-    if chosen_companion == fire_lizard:
-        print("\nGreat choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health.")
-    elif chosen_companion == water_turtle:
-        print("\nGreat choice! Water Turtle is a great all-round option to outmatch your foes and become the victor!")
-    elif chosen_companion == plant_frog:
-        print("\nGreat choice! Plant Frog has great defense and health, but is a bit slow, so get ready to tank some blows!")
-    elif chosen_companion == electric_mouse:
-        print("\noh... uhh... I guess I could get you that one...")
+        companion_inventory.append(chosen_companion)
+    
+        # These lines define what Companion you chose and gives a print statment depending on which one
+        if chosen_companion == fire_lizard:
+            print("\nGreat choice! Fire Lizard is a very strong and fast option, but slightly lacks defense and health.")
+        elif chosen_companion == water_turtle:
+            print("\nGreat choice! Water Turtle is a great all-round option to outmatch your foes and become the victor!")
+        elif chosen_companion == plant_frog:
+            print("\nGreat choice! Plant Frog has great defense and health, but is a bit slow, so get ready to tank some back-shots!")
+        elif chosen_companion == electric_mouse:
+            print("\noh... uhh... I guess I could get you that one...")
 
     # If the typed word is not in the previously above valid choices it will loop the opening question and give the heads up to provide a valid option
     else:
         print("\n---------------------------------\nPlease choose a valid option.")
 
+def show_inventory():
+    global lobby
+    print("\nYour Companion Inventory:")
+    for companion in companion_inventory:
+        moves_list = ', '.join(move.name for move in companion.moves)
+        print(f"- \033[1m{companion.name}\033[0m    Element: {companion.element}    HP: {companion.health}    Damage: {companion.damage_multiplier}x    Defense: {companion.defense}    Speed: {companion.speed}    Moves: {moves_list}\n")
+    lobby -= 1
+
+def area_info():
+    print("\nArea Info:\n- Meadow: Balanced\n- Forest: Trickier enemies\n- Cave: Higher risk, higher reward")
+
+def play():
+    print("\nWhere would you like to explore?")
+    area_choice = input("Meadow  Forest  Cave  Meadow 2  Forest 2  Cave 2\n").lower()
+    print(f"\nYou have chosen to explore the {area_choice.title()}!")
+
 # Once you have chosen a Companion you will begivn this prompt and taken to the main lobby menu
 print("\n ---------------------------------\n\nNow that you have chosen your Companion what would you like to do next?\n")
 
-lobby_choice = input("\033[1mPlay!\nInventory\nArea Info\n\033[0m").lower()
-if lobby_choice : 'play_choice'
-play_choice = input("\n Meadow  Forest  Cave   Meadow 2   Forest 2   Cave 2")
-elif lobby_choice : 'inventory_choice'
-inventory_choice = input()
-elif lobby_choice : 'area_info_choice'
-area_info_choice = input()
+lobby = 0
+
+while lobby == 0:
+
+    lobby_choice = input("1. \033[1mPlay!\033[0m\n2. \033[1mInventory\033[0m\n3. \033[1mArea Info\033[0m\n\n").lower()
+
+    if lobby_choice in ["1", "play"]:
+        play()
+        lobby += 1
+    elif lobby_choice in ["2", "inventory"]:
+        show_inventory()
+        lobby += 1
+    elif lobby_choice in ["3", "area info", "area"]:
+        area_info()
+        lobby += 1
+    else:
+        print("Invalid option, try again")
+
+
