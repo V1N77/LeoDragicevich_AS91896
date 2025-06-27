@@ -29,9 +29,9 @@ thunder_shock = Moves("Thunder shock", "Electric", damage= 34)
 
 # These lines arre to write the stats of the moves variable and orginis it into the Chompanion class
 fire_lizard = Companion("\033[31;1mFire Lizard\033[0m", "\033[31;1mFire\033[0m", health=100, speed=30, damage_multiplier=1.2, defense= 40, moves= [tackle, ember])
-water_turtle = Companion("\033[34;1mWater Turtle\033[0m", "\033[34;1mWater\033[0m", health=110, speed=25, damage_multiplier=1.1, defense= 45, moves= [tackle, water_gun])
+water_turtle = Companion("\033[36;1mWater Turtle\033[0m", "\033[36;1mWater\033[0m", health=110, speed=25, damage_multiplier=1.1, defense= 45, moves= [tackle, water_gun])
 plant_frog = Companion("\033[32;1mPlant Frog\033[0m", "\033[32;1Plant\033[0m", health=120, speed=20, damage_multiplier=0.9, defense= 50, moves= [tackle, vine_whip])
-electric_mouse = Companion("Electric Mouse\033[0m", "Electric\033[0m", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
+electric_mouse = Companion("\033[33;1mElectric Mouse\033[0m", "\033[33;1mElectric\033[0m", health=100, speed=40, damage_multiplier=1.0, defense= 35, moves= [quick_attack, thunder_shock])
 
 companion_inventory = []
 
@@ -57,7 +57,7 @@ chosen_companion = None
 while chosen_companion is None:
     # This is the opening question to the game as it gives them the choice of what Companion they want for the rest of their journey
     print("\n\nChoose you Companion to start your journey, but you can only choose one so think wisely, what will your your choice be?\n")
-    user_choice = input("1. \033[1m\033[31mFire Lizard\033[0m\n2. \033[1m\033[1;34mWater Turtle\033[0m\n3. \033[1m\033[32mPlant Frog\033[0m\n").lower()
+    user_choice = input("1. \033[31;1mFire Lizard\033[0m\n2. \033[36;1mWater Turtle\033[0m\n3. \033[32;1mPlant Frog\033[0m\n").lower()
 
     # This defines the user choice in the valid choices and sorts the chosen Companions into the inventory variable
     if user_choice in valid_companion_choices:
@@ -83,7 +83,7 @@ def show_inventory():
     print("\nYour Companion Inventory:")
     for companion in companion_inventory:
         moves_list = ', '.join(move.name for move in companion.moves)
-        print(f"- \033[1m{companion.name}\033[0m    Element: {companion.element}    HP: {companion.health}    Damage: {companion.damage_multiplier}x    Defense: {companion.defense}    Speed: {companion.speed}    Moves: {moves_list}\n")
+        print(f"-   {companion.name}\033[0m    Element: {companion.element}    HP: {companion.health}    Damage: {companion.damage_multiplier}x    Defense: {companion.defense}    Speed: {companion.speed}    Moves: {moves_list}\n")
     lobby -= 1
 
 def area_info():
