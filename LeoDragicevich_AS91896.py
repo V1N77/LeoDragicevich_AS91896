@@ -49,25 +49,26 @@ class Companion:
         self.first_evolution_xp = first_evolution_xp
         self.second_evolution_xp = second_evolution_xp
 
+
     def gain_xp_and_check_evolution(self):
         self.xp += 1
-        print(f"{self.name} gained 1 XP! Total XP: {self.xp}")
+        print(f"\n{self.name}{colour_text_rgb(' gained ', 255, 255, 255)}{colour_text_rgb('1 ', 255, 255, 0)}{colour_text_rgb('XP! Total XP: ', 255, 255, 255)}{colour_text_rgb(str(self.xp), 255, 255, 0)}")
 
         if self.xp < self.first_evolution_xp:
-            print(f"{self.name} needs {self.first_evolution_xp - self.xp} more XP to evolve.")
+            print(f"{self.name} needs {colour_text_rgb(str(self.first_evolution_xp - self.xp), 255, 255, 0)} more XP to evolve.")
         elif self.xp < self.second_evolution_xp:
             if self.name == self.first_evolution:
-                print(f"{self.name} needs {self.second_evolution_xp - self.xp} more XP to evolve again.")
+                print(f"{self.name} needs {colour_text_rgb(str(self.second_evolution_xp - self.xp), 255, 255, 0)} more XP to evolve again.")
             elif self.first_evolution:
                 # Evolve to first evolution
-                print(f"{self.name} is evolving into {self.first_evolution}!")
+                print(f"{self.name}{colour_text_rgb(' is evolving into ', 255, 255, 255)}{self.first_evolution}{colour_text_rgb('!', 255, 255, 255)}")
                 evolved = globals()[self.first_evolution]
                 self.evolve_to(evolved)
         elif self.name == self.second_evolution:
-            print(f"{self.name} is at max evolution.")
+            print(f"{self.name}{colour_text_rgb(' is at max evolution!', 255, 255, 255)}")
         else:
             # Evolve to second evolution
-            print(f"{self.name} is evolving into {self.second_evolution}!")
+            print(f"{self.name}{colour_text_rgb(' is evolving into ', 255, 255, 255)}{self.second_evolution}{colour_text_rgb('!', 255, 255, 255)}")
             evolved = globals()[self.second_evolution]
             self.evolve_to(evolved)
 
@@ -553,7 +554,12 @@ def battle(player, opponent):
             if attacker is player:
                 print("\nChoose a move:")
                 for i, move in enumerate(player.moves, 1):
-                    print(f"{i}. {move.name} ({move.min_damage}-{move.max_damage})")
+                    if move.min_damage == move.max_damage:
+                        dmg_display = f"{move.max_damage}"
+                    else:
+                        dmg_display = f"{move.min_damage} - {move.max_damage}"
+                    print(f"{i}. {move.name} ({dmg_display})")
+
                 while True:
                     try:
                         idx = int(input("Enter move number: "))
@@ -567,10 +573,12 @@ def battle(player, opponent):
                 chosen_move = random.choice(opponent.moves)
                 print(f"{opponent.name} used {chosen_move.name}!")
 
+            # Damage calculation
             raw = random.randint(chosen_move.min_damage, chosen_move.max_damage)
             scaled = raw * attacker.damage_multiplier
 
-            elem_mul = get_element_multiplier(attacker.element, defender.element)
+            elem_mul = get_element_multiplier(chosen_move.element, defender.element)
+
             if elem_mul > 1:
                 print(colour_text_rgb("It's super effective!", 255, 100, 100))
             elif elem_mul < 1:
@@ -583,6 +591,7 @@ def battle(player, opponent):
             defender.health -= final_dmg
             print(f"{defender.name} {colour_text_rgb(f'took {final_dmg} damage!', 255, 255, 255)}")
 
+            # Fainting logic
             if defender.health <= 0:
                 print(f"\n{defender.name} has fainted!")
 
@@ -592,13 +601,14 @@ def battle(player, opponent):
                     print("Returning to the lobby...\n")
                     return
 
-                # You win!
                 print(f"\n{colour_text_rgb('You ', 255, 255, 255)}{colour_text_rgb(' Won ', 0, 255, 0)}{colour_text_rgb(' the battle!', 255, 255, 255)}")
 
-                # Ask to capture or gain XP
+                # Capture or XP
                 while True:
-                    choice = input("\n1. Capture the wild companion?\n2. Gain XP from the battle").lower()
-                    if choice in ["1", "Capture", "yes", "y"]:
+                    choice = input(f"\n1. {colour_text_rgb('Capture the wild Companion!', 255, 255, 255)}"
+                                   f"\n2. {colour_text_rgb('Gain XP from the battle!', 255, 255, 255)}\n").lower()
+                    if choice in ["1", "capture", "yes", "y"]:
+                        defender.health = defender.max_health
                         add_new_companion(copy.deepcopy(defender))
                         break
                     elif choice in ["2", "no", "n", "xp", "gain"]:
@@ -608,45 +618,8 @@ def battle(player, opponent):
                         print("Invalid input. Please type (1 or 2)")
 
                 player.health = player.max_health
-                print("Returning to the lobby...\n")
+                print("\nReturning to the lobby...\n")
                 return
-
-def gain_xp_and_check_evolution(self):
-    self.xp += 1
-    print(f"{self.name} gained 1 XP! Total XP: {self.xp}")
-
-    if self.xp < self.first_evolution_xp:
-        print(f"{self.name} needs {self.first_evolution_xp - self.xp} more XP to evolve.")
-    elif self.xp < self.second_evolution_xp:
-        if self.name == self.first_evolution:
-            print(f"{self.name} needs {self.second_evolution_xp - self.xp} more XP to evolve again.")
-        elif self.first_evolution:
-            # Evolve to first evolution
-            print(f"{self.name} is evolving into {self.first_evolution}!")
-            evolved = globals()[self.first_evolution]
-            self.evolve_to(evolved)
-    elif self.name == self.second_evolution:
-        print(f"{self.name} is at max evolution.")
-    else:
-        # Evolve to second evolution
-        print(f"{self.name} is evolving into {self.second_evolution}!")
-        evolved = globals()[self.second_evolution]
-        self.evolve_to(evolved)
-
-def evolve_to(self, evolved_form):
-    self.name = evolved_form.name
-    self.element = evolved_form.element
-    self.health = evolved_form.health
-    self.max_health = evolved_form.max_health
-    self.damage_multiplier = evolved_form.damage_multiplier
-    self.defense = evolved_form.defense
-    self.speed = evolved_form.speed
-    self.moves = evolved_form.moves
-    self.first_evolution = evolved_form.first_evolution
-    self.second_evolution = evolved_form.second_evolution
-    self.first_evolution_xp = evolved_form.first_evolution_xp
-    self.second_evolution_xp = evolved_form.second_evolution_xp
-    print(f"Evolution complete! Say hello to {self.name}!")
 
 # These are all the random responses that could be chosen when typing an invalid option when choosing your starter
 invalid_companion_responses = [
@@ -797,6 +770,62 @@ def show_inventory():
             f"    {colour_text_rgb('Moves', 255, 255, 255)}: {moves_list}\n"
         )
 
+def view_storage():
+    clear_screen()
+    global lobby
+
+    if not stored_companions:
+        print("\nYou have no stored companions.\n")
+        return
+
+    print("\nStored Companions:")
+    for i, comp in enumerate(stored_companions, 1):
+        moves_list = ', '.join(move.name for move in comp.moves)
+        print(
+            f"{i}. {comp.name}    "
+            f"{colour_text_rgb('Element', 255, 255, 255)}: {comp.element}    "
+            f"{colour_text_rgb('HP', 255, 255, 255)}: {colour_text_rgb(str(comp.health), 0, 255, 0)}    "
+            f"{colour_text_rgb('Damage', 255, 255, 255)}: {colour_text_rgb(str(comp.damage_multiplier), 255, 185, 130)}x    "
+            f"{colour_text_rgb('Defense', 255, 255, 255)}: {colour_text_rgb(str(comp.defense), 0, 162, 54)}    "
+            f"{colour_text_rgb('Speed', 255, 255, 255)}: {colour_text_rgb(str(comp.speed), 138, 232, 255)}\n"
+            f"    {colour_text_rgb('Moves', 255, 255, 255)}: {moves_list}\n"
+        )
+
+    if len(active_companions) < 3:
+        print("\nYou have space in your active team. Choose a stored Companion to add:")
+    else:
+        print("\nYour active team is full (3 Companions). You can swap with a stored Companion.")
+
+    try:
+        choice = int(input("\nEnter the number of the stored Companion you want to move to active (or 0 to cancel): "))
+        if choice == 0:
+            return
+        if 1 <= choice <= len(stored_companions):
+            selected_stored = stored_companions[choice - 1]
+
+            if len(active_companions) < 3:
+                active_companions.append(selected_stored)
+                stored_companions.remove(selected_stored)
+                print(f"\n{selected_stored.name} was moved to your active Companions.")
+            else:
+                print("\nYour current active Companions:")
+                for i, comp in enumerate(active_companions, 1):
+                    print(f"{i}. {comp.name}")
+
+                swap_choice = int(input("Choose an active Companion to send to storage: "))
+                if 1 <= swap_choice <= len(active_companions):
+                    to_store = active_companions[swap_choice - 1]
+                    stored_companions.append(to_store)
+                    active_companions[swap_choice - 1] = selected_stored
+                    stored_companions.remove(selected_stored)
+                    print(f"\nSwapped {to_store.name} with {selected_stored.name}.")
+                else:
+                    print("Invalid active Companion choice.")
+        else:
+            print("Invalid storage choice.")
+    except ValueError:
+        print("Invalid input.")
+
 def area_info():
     clear_screen()
     global lobby
@@ -846,7 +875,6 @@ def element_info():
         return colours.get(element, (255, 255, 255))
 
     print(colour_text_rgb("- Element Info -", 255, 255, 255))
-    print()
 
     for element, info in element_chart.items():
         r, g, b = get_element_colour(element)
@@ -864,17 +892,20 @@ print("\n ---------------------------------\n\nNow that you have chosen your Com
 
 while True:
     print("\nWhat would you like to do next?")
-    lobby_choice = input("1. \033[1mPlay!\033[0m\n2. \033[1mView Inventory\033[0m\n3. \033[1mArea Info\033[0m\n4. \033[1mElement Info\033[0m\n\n").lower()
+    lobby_choice = input("1. \033[1mPlay!\033[0m\n2. \033[1mView Active\033[0m\n3. \033[1mView Storage\033[0m\n4. \033[1mArea Info\033[0m\n5. \033[1mElement Info\033[0m\n\n").lower()
 
     if lobby_choice in ["1", "play", "play!"]:
         play()
-    elif lobby_choice in ["2", "show inventory", "inventory", "view inventory", "showinventory", "viewinventory"]:
+    elif lobby_choice in ["2", "show active", "active", "view active", "showactive", "viewactive"]:
         clear_screen()
         show_inventory()
-    elif lobby_choice in ["3", "area info", "area", "areainfo"]:
+    elif lobby_choice in ["3", "show storage", "storage", "view storage", "showstorage", "viewstorage"]:
+        clear_screen()
+        view_storage()
+    elif lobby_choice in ["4", "area info", "area", "areainfo"]:
         clear_screen()
         area_info()
-    elif lobby_choice in ["4", "element info", "element", "elementinfo"]:
+    elif lobby_choice in ["5", "element info", "element", "elementinfo"]:
         clear_screen()
         element_info()
     else:

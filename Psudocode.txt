@@ -1,32 +1,518 @@
-Intro: "Choose you companion to start your journey"
-1. Fire Lizard
-2. Water Turtle
-3. Plant Frog
+# My imports used
+import random
+import os
+import re
+import copy
 
-#stats
+define clear screen
+    Make clear screen tag 
 
-Fire Lizard stats:
-type = Fire
-health = 100
-speed = 30
-damage multiplier = 1.1x
-defense = 30
-moves = Tackle, Ember
+Define R G B colour
+    Make R G B colour work by starting it and end the chain
 
-Water Turtle stats:
-type = Water
-health = 110
-speed = 25
-damage multiplier = 1.0x
-defense = 40
-moves = Tackle, Water_Gun
 
-Plant Frog stats:
-type = Plant
-health = 120
-speed = 20
-damage multiplier = 0.9x
-defense = 50
-moves = Tackle, Vine_Whip
+Compile ansi colour code stripper
+Define ansi colour code stripper
+    ansi colour code stripper
 
-defense 100 = enymey damagemultiplier = 0.5x
+What Companions require
+    Define what the need to be in this class
+        Self
+        Name
+        Element
+        Health
+        Max_Health starts at none
+        Damage Multipler starts a 1.0
+        Defense starts at zero
+        Speed starts at zero 
+        Moves starts with none
+        Xp starts at zero
+        First evolution Starts at none
+        Second evolution starts at none
+        First evoulution XP requirement to evolve = 10
+        Second evolution XP requirement to evolve = 35
+
+        Companion has name
+        Companion has element
+        Companion has health
+        Companion has max health if max_health is not none just use health
+        Companion has damage multiplier
+        Companion has defense
+        Companion has speed
+        Companion has Moves "which is the name of the class" or has multiple moves stored in a list 
+        Companion has XP counter
+        If Companion has first evolution it has a first evolution
+        If Companion has second evolution it has second evolution
+        If companion has first evolution XP counter it has first evolution XP counter
+        If companion has Second evolution XP counter it has Second evolution XP counter
+
+    Define gaining XP for said Companion
+        Said Companion gains 1 XP to counter
+        Display that Companion gained one XP in white and yellow
+
+        If Said Companion XP is Less than requirement for first evolution
+           Display {Companion name} needs {current XP} - {Xp for first evolution} in gray and yellow
+        Else If Said Companion XP is Less than requirement for Second evolution
+            If Companion name matches first evolution
+                Display {Companion name} needs {current XP} - {Xp for first evolution} to evolve again in gray and yellow
+            Else IF companion first evolution occurs
+                Display {Companion name} is evolving into {first evolution} in white
+                Changing ID of Companion
+                Companion evolved into companion
+            Else IF companion second evolution occurs
+                Display Companion is at final evolution
+        Else
+
+            Display Comapnion is evloving into second evolution in white
+            Changing ID of Companion
+            Companion evolved into Companion
+
+    Define that all stats change from evolution
+        All stats change
+
+    Defines displaying the stats
+        Gets all the moves and loops them in a formatted string 
+        returns formated string (
+            Format in name, element, health
+            Format in damage, defence, speed
+            Formats in XP and previously formated moves string
+        )
+
+Class for Moves
+    Define what Moves need to be in the class
+        Name
+        Element
+        Min damage
+        Max Damage If max damage not used use min damage
+
+    Defines the random damage between min and max
+        runs randomizer to randomise it, yes big shock
+
+Just a whole lot of variables being sort into the Moves class
+
+Just a whole lot of variables being sort into the Companion class
+
+Chart showing element weaknesses and stregnths for moves against companion elements
+    None": 
+        "strong_against": ["Spirit", "Armoured"],
+        "weak_against": ["Toxic", "Enraged"]
+    
+    "Fire": 
+        "strong_against": ["Plant", "Armoured"],
+        "weak_against": ["Water", "Wind"]
+    
+    "Water": 
+        "strong_against": ["Fire","Rock"],
+        "weak_against": ["Plant", "Electric"]
+    
+    "Plant": 
+        "strong_against": ["Water", "Spirit"],
+        "weak_against": ["Fire", "Electric"]
+    
+    "Electric": 
+        "strong_against": ["Water", "Wind"],
+        "weak_against": ["Rock", "Armoured"]
+    
+    "Rock": 
+        "strong_against": ["Electric", "Toxic"],
+        "weak_against": ["Water", "Enraged"]
+    
+    "Wind": 
+        "strong_against": ["Fire", "Plant"],
+        "weak_against": ["Electric", "Armoured"]
+    
+    "Armoured": 
+        "strong_against": ["Wind", "Enraged"],
+        "weak_against": ["Fire", "None"]
+     
+    "Spirit": 
+        "strong_against": ["Enraged", "Toxic"],
+        "weak_against": ["Plant", "None"],
+
+    "Toxic": 
+        "strong_against": ["None","Plant"],
+        "weak_against": ["Rock", "Spirit"]
+    
+    "Enraged": 
+        "strong_against": ["None", "Rock"],
+        "weak_against": ["Spirit", "Armoured"]        
+
+List of all the companions found in the forest wild
+
+
+List of all the companions weights found in the forest wild in order to the other list so they allign
+
+
+List of all the companions found in the beach wild
+
+
+List of all the companions weights found in the beach wild in order to the other list so they allign
+
+
+List of all the companions found in the desert wild
+
+
+List of all the companions weights found in the desert wild in order to the other list so they allign
+
+
+List containing nothing that will be filled with active companions []
+
+List containing nothing that will be filled with Storage companions []
+
+Used for battle will be filled when selecting companion to use for battle
+
+
+Define get element multipler form the attacker and defender when in battle from the strenght and weakness chart
+
+    Removing ansi colour code as to not effect gamplay for attacker
+    Removing ansi colour code as to not effect gamplay for Defender
+
+    If attack in chart strong against the defender
+        Strong against
+            2x damage
+        Weak against 
+            0.5x damage
+    If neither 1.0x damage
+
+Define adding new companions
+    if companions in active companions less than 3 
+        Active companion list gets the new companion
+        Display comapnion got added
+    Else
+        Stored companions gets new companion
+        Display companion got added
+
+Define choosing player companion before battler
+    Display that they choose
+    This indexes the active companions and enumerates them listing them
+        Print the Listed companions
+    
+    While 
+        Try doing this "if risky lines is being run"
+            Player enters number from listed companions
+            if listed companion is chosen
+                The player companion is chosen
+            else:
+                Displlay invalid number
+        If something goes wrong
+            Display invalid number
+
+Define Battle between player and opponent
+    Start turn order chooser
+
+    Loop while player and opponent health is greater than 0
+        attacker in turn order
+            Defender is player if Opponet is attacking if not player attacks
+
+            Display Companion attacking
+            Display(
+                Format player name and health colour 
+                Format opponent name and health colour
+            )
+
+            If the player is the attacker
+                Display to player to choose a move
+                Indexes the players moves and numbers them out starting from 1
+                    If min move damage is equal to max move damage display just max damage
+                    
+                    else:
+                    Display min damage to max damage
+        
+                while True:
+                    Try doing this "if risky lines is being run"
+                        Tells player to input move number
+                        If move is chosen
+                            Players chosen move is confirmed
+                            breaks while loop
+                    except ValueError:
+                        Igonores any input thats not a number to avoid crashing
+                    Displays player to enter a number
+            Else Opponent attacking
+                Opponent chooses random move
+                Displays opponent companion used random move
+
+            raw damage is random chosen moves random number inbetween its min max
+            Damage is then increased due to the damage multiplers
+
+            element multipler gets the elemnts of the move and defender
+
+            if it gets greater than 1 on the element chart
+                Displays That it was super effective in light red
+            if it gets less than 1 on the element chart
+                Displays it was not very effective in light blue
+
+            damagereduction for defense is that 100 defense is 50 % reduction 
+            Damage after defense is then stringed together 
+
+            Final damage is equal to damage after defense times element multipler 
+            Defender health minus final damage 
+            Display the results in white
+
+            If defender health below zero
+                Display that defender fainted
+
+                If the defender is the player
+                    Display you lose in white and red
+                    Heal player companion to full health
+                    Display returning to lobby
+                    Return to lobby
+
+                Displays you won in white and green
+
+                Loops following lines
+                    Offer choice to capture or gain XP in white
+                    if Capture
+                        Heal caught companion
+                        Copy it and add it to Companions
+                        breaks Loop
+                    If Gain Xp
+                        Player companion gains xp and checks for evolution
+                        breaks loop
+                    else:
+                        Display to choose and option
+
+                Player companion health to max
+                Display returning to lobby
+                return to lobby
+
+List of possible invalid choice responses when choosign your starter
+
+Define decide turn order 
+    If player speed is greater or equal to wild speed then player starts
+        Return to battle order being player wild
+    if not
+        Return to battle order being wild player
+    
+Defines forest
+    clear screen
+    globalises player companion
+    globalises lobby
+    Displays you expore into the forest in white
+    Gets a random wild companion based off of the weight pool, make a copy of it and chooses it as your opponent
+    Displays opponent
+    Displays element
+    Displays health
+    Displays speed
+
+    Activates the player to choose as battle companion
+
+    if players companions speed is equal or greater to opponent
+        clear screen
+        Displays your companions name out sped opponent in white
+    else:
+        clear screen
+        Displays your opponent name out sped your companions name in white
+    
+    Activates battle between player and opponent
+
+
+def beach():
+    clear screen
+    globalises player companion
+    globalises lobby
+    Displays you expore into the beach in white
+    Gets a random wild companion based off of the weight pool, make a copy of it and chooses it as your opponent
+    Displays opponent
+    Displays element
+    Displays health
+    Displays speed
+
+    Activates the player to choose as battle companion
+
+    if players companions speed is equal or greater to opponent
+        clear screen
+        Displays your companions name out sped opponent in white
+    else:
+        clear screen
+        Displays your opponent name out sped your companions name in white
+    
+    Activates battle between player and opponent
+
+def desert():
+    clear screen
+    globalises player companion
+    globalises lobby
+    Displays you expore into the desert in white
+    Gets a random wild companion based off of the weight pool, make a copy of it and chooses it as your opponent
+    Displays opponent
+    Displays element
+    Displays health
+    Displays speed
+
+    Activates the player to choose as battle companion
+
+    if players companions speed is equal or greater to opponent
+        clear screen
+        Displays your companions name out sped opponent in white
+    else:
+        clear screen
+        Displays your opponent name out sped your companions name in white
+    
+    Activates battle between player and opponent
+
+The valid options when choosing your starter[
+
+]
+
+
+states that your starter isnt chosen yet
+
+while chosen_companion is None:
+    Displays the games opening message and offers the 3/4 choices to start the game 
+    Offers the user the choice
+        Formats the choice for fire lizard in red
+        Formats the choice for water turtle in blue
+        Formats the choice for plant frog in green
+    puts response in lower caps
+
+    If user choice in valid choices for choosing starter
+        add starter to active companions
+
+    if player chooses fire lizard
+            clear screen
+            Display fire lizard introduction
+    if player chooses water turtle 
+            clear screen
+            Displays water turtle introduction
+    if player chooses plant frog 
+            clear screen
+            display plant frog introduction
+    if player chooses electric mouse
+            clear screen
+            display electric mouse introduction
+
+    If not
+        Displays line blocker
+        Display on of the random invalid choices when choosing a starter
+
+Defines showing inventory
+    clear screen
+    globalises lobby
+    displays your companion inventory title
+    Companions in active companions 
+        display stats
+
+defines viewing storage
+    clear screen 
+    globalises lobby
+
+    if nothing stored
+        displays that there is nothing
+        returns to lobby
+
+    Displays stored companions title
+    Indexs stored companions and numbers them
+        lays out there moves
+            formats there name coloured
+            formats there element coloured
+            formats there health coloured
+            formats there damage coloured
+            formats there defense coloured
+            formats there speed coloured
+            formats there moves
+        
+
+    Counts active companions if less the 3
+        Displays you have room in your active compacions
+    else:
+        Displays active companions full and you can have to swap them
+
+    try:
+        Offers input to player to make choose which companion they want on there active team
+        if they choose 0 
+            return to lobby
+        They make choice from the numberd companions in their stored companions
+            initates there choice
+
+            if Counts companions in active companions if less than 3
+                active companions get added the stored companion
+                stored companions loose the chosen companion
+                displays the choice they made
+            If companions in active companions no less then 3
+                displays the title for current active companions
+                numbers the companions 
+                    displays there names and numbers
+
+                Player gets offered input to swap choice
+                initilises choice made by player
+                    starts transfering companion over
+                    companion gets transfered over
+                    active companion moves to stored companions
+                    stored companion gets removed
+                    Displays the companions transfered
+                else:
+                    displays choice invalid
+        else:
+            displays invalid storage choice
+    stops code from breaking during error
+        displays invalid input
+
+defines area info
+    clear screen
+    globalises lobby
+    displays area info title
+        Formats and displays the colours in the forest description
+        Formats and displays the colours in the beach description
+        Formats and displays the colours in the desert description
+
+Defines play
+    clear screen
+    displays o the player where they want to explore
+    Starts the input for area choice
+       Formamts the colour into the option forest
+       Formamts the colour into the option forest
+       Formamts the colour into the option forest
+        return to lobby
+    makes all text in input lower case
+
+    If player chooses forest
+        they explore forest
+
+    If player chooses beach
+        they explore beach
+
+    If player chooses desert
+        they explore desert
+    if player chooses lobby
+    return to lobby
+    else:
+        Displays invalid option
+
+Defines element info
+    clear screen
+
+    Defines get element colours
+        elements and there colours are store here
+
+        looks up the colour from the rgb colours
+
+    display element info title in white
+
+    loops through the element chart which defines the colours and element names strenghts and weaknesses
+
+        Displays element colour
+        displays dtregnth colour
+        displays weakness coloue
+
+Displays a devider and asks the user what they want to do after choosing companion
+
+loops lines
+    Displays a question of what they would like to do next
+    asks the player with an input question between play view active companions view stored companions area info or element info
+
+    If player chooses play
+        Takes them to play object
+    If player chooses view active companions 
+        clear screen
+        view active companions
+    if player chooses view storage
+        clear screen
+        view companion storage
+    if player chooses area info 
+        clear screen
+        It takes them to view area info
+    if player chooses element info
+        clear screen
+        they view element info
+    else:
+        display invalid response
